@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Movies App</title>
+    <!-- Add some CSS to change client UI -->
+    <style>
+    div{
+        color:white;
+    }
+    H2{
+        color:white;
+    }
+    body {
+        background-color: #232F3E;
+        }
+    label {
+        color: #ecd29e;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 20px;
+        margin-left: 40px;
+        }
+    button {
+        color: #6d624d;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 20px;
+        margin-left: 40px;
+        }
+     input {
+        color: #232F3E;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 15px;
+        margin-left: 20px;
+        }
+    </style>
+    <script>
+        // define the callAPI function that takes a first name and last name as parameters
+        var callAPI2 = (id,director,leadactor,name,year)=>{            
+            var raw = JSON.stringify({"id":id,"director":director,"leadactor":leadactor,"name":name,"year":year});
+            // create a JSON object with parameters for API call and store in a variable
+            var requestOptions = {
+                method: 'POST',
+                body: raw,
+                redirect: 'follow'
+            };
+            // make API call with parameters and use promises to get response
+            fetch("https://4mhxbtc2ph.execute-api.us-east-1.amazonaws.com/v1/movies", requestOptions)
+            window.alert("Successfully updated a Movie")
+            location.reload();
+        }
+        // define the callAPI function that takes a first name and last name as parameters
+        var callAPI = (id,director,leadactor,name,year)=>{            
+            var raw = JSON.stringify({"id":id,"director":director,"leadactor":leadactor,"name":name,"year":year});
+            // create a JSON object with parameters for API call and store in a variable
+            var requestOptions = {
+                method: 'PUT',
+                body: raw,
+                redirect: 'follow'
+            };
+            // make API call with parameters and use promises to get response
+            fetch("https://4mhxbtc2ph.execute-api.us-east-1.amazonaws.com/v1/movies", requestOptions)
+            window.alert("Successfully added a Movie")
+            location.reload();
+        }
+        // define the callAPI function that takes a first name and last name as parameters
+        var callAPI3 = (id)=>{            
+            var raw = JSON.stringify({"id":id,"director":director,"leadactor":leadactor,"name":name,"year":year});
+            // create a JSON object with parameters for API call and store in a variable
+            var requestOptions = {
+                method: 'DELETE',
+                body: raw,
+                redirect: 'follow'
+            };
+            // make API call with parameters and use promises to get response
+            fetch("https://4mhxbtc2ph.execute-api.us-east-1.amazonaws.com/v1/movies", requestOptions)
+            window.alert("Successfully deleted a Movie")
+            location.reload();
+        }
+    </script>
+</head>
+<body>
+    <H2>Add new Movie</H2>
+    <form>
+        <label>id :</label>
+        <input type="text" id="id">
+        <label>Director :</label>
+        <input type="text" id="director">
+        <label>Lead Actor :</label>
+        <input type="text" id="leadactor">
+        <label>Movie name :</label>
+        <input type="text" id="name">
+        <label>Year of release :</label>
+        <input type="text" id="year">
+        <button type="button" onclick="callAPI(document.getElementById('id').value,document.getElementById('director').value,document.getElementById('leadactor').value,document.getElementById('name').value,document.getElementById('year').value)">Add Movie</button>
+    </form>
+    <H2>Update an existing Movie</H2>
+    <form>
+        <label>id :</label>
+        <input type="text" id="id2">
+        <label>Director :</label>
+        <input type="text" id="director2">
+        <label>Lead Actor :</label>
+        <input type="text" id="leadactor2">
+        <label>Movie name :</label>
+        <input type="text" id="name2">
+        <label>Year of release :</label>
+        <input type="text" id="year2">
+        <button type="button" onclick="callAPI2(document.getElementById('id2').value,document.getElementById('director2').value,document.getElementById('leadactor2').value,document.getElementById('name2').value,document.getElementById('year2').value)">Update Movie</button>
+    </form>
+    <H2>Delete a Movie</H2>
+    <form>
+        <label>id :</label>
+        <input type="text" id="id3">
+       
+        <button type="button" onclick="callAPI3(document.getElementById('id3').value)">Delete Movie</button>
+    </form>
+    <H2>All Movies</H2>
+    
+    <div id="myData"></div>
+    <script>
+        var requestOptions = {
+                method: 'GET',
+                redirect: 'follow'
+            };
+        fetch("https://4mhxbtc2ph.execute-api.us-east-1.amazonaws.com/v1/movies", requestOptions)
+            .then(function (response) {
+                return response.json();
+            })
+            .then(function (data) {
+                appendData(data);
+            })
+            .catch(function (err) {
+                console.log('error: ' + err);
+            });
+        function appendData(data) {
+            var mainContainer = document.getElementById("myData");
+            for (var i = 0; i < data.length; i++) {
+                var div = document.createElement("div");
+                div.innerHTML = ' <font size="4">ID: ' + data[i].id + ' Director: ' + data[i].director + ' Lead Actor: ' + data[i].leadactor + ' Name: ' + data[i].name + ' Realease year: ' + data[i].year +'</font>';
+                mainContainer.appendChild(div);
+            }
+        }
+    </script>
+    
+</body>
+</html>
