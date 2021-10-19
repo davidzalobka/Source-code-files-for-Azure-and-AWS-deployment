@@ -1,1 +1,1 @@
-# Source-code-files-for-Azure-and-AWS-deployment
+Σε αυτό το project περιλαμβάνονται όλα τα αρχεία που χρησιμοποίησα για την διανομή μίας blog εφαρμογής σε γλώσσα PHP στο νέφος του Amazon Web Services.
